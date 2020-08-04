@@ -2,12 +2,12 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
 
-public class MyFirstTest {
+public class MyFirstTest extends TestConfig{
 
     @Test
     public void myFirstTest() {
         given().log().all()
-                .when().get("http://video-game-db.eu-west-2.elasticbeanstalk.com/app/videogames")
+                .when().get("videogames")
                 .then()
                 .log().all();
     }
