@@ -67,4 +67,12 @@ public class VideoGameDbTest extends VideoGameConfig {
                 .then();
     }
 
+    @Test
+    public void deleteGame(){
+        given()
+                .when()
+                .delete("videogames/2")
+                .then();
+    }
+
 }
