@@ -31,4 +31,22 @@ public class VideoGameDbTest extends VideoGameConfig {
                 .all();
     }
 
+    @Test
+    public void createTestByXml() {
+        String gameByXml = "<videoGame category=\"Driving\" rating=\"Universal\">\n" +
+                "    <id>556</id>\n" +
+                "    <name>Gran Turismo 5</name>\n" +
+                "<releaseDate>2001-03-10T00:00:00Z</releaseDate>\n" +
+                "    <reviewScore>99</reviewScore>\n" +
+                "  </videoGame>";
+
+        given()
+                .body(gameByXml)
+                .header("Accept", "application/xml")
+                .header("Content-Type", "application/xml")
+                .when()
+                .post(VideoGamesEndpoints.ALL_VIDEO_GAMES)
+                .then();
+    }
+
 }
