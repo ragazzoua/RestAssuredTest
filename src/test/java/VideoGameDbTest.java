@@ -8,7 +8,7 @@ public class VideoGameDbTest extends VideoGameConfig {
 
     @Test
     public void getAllGames(){
-        given().when().get(VideoGamesEndpoints.ALL_VIDEO_GAMES).then();
+        given().when().get(VideoGamesEndpoints.ALL_VIDEO_GAMES).then().log().all();
     }
 
 }
