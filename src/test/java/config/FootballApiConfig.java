@@ -3,6 +3,8 @@ package config;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.BeforeClass;
@@ -19,6 +21,8 @@ public class FootballApiConfig {
                 .setBasePath("/v2/")
                 .addHeader("X-Auth-Token", "505f35e412dc44f291919a1b3ae24301")
                 .addHeader("X-Response-Control", "minified")
+                .addFilter(new RequestLoggingFilter())
+                .addFilter(new ResponseLoggingFilter())
                 .build();
 
         footballResponseSpecification = new ResponseSpecBuilder()
