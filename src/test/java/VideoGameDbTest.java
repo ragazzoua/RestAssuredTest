@@ -75,4 +75,13 @@ public class VideoGameDbTest extends VideoGameConfig {
                 .then();
     }
 
+    @Test
+    public void getSingleGame(){
+        given()
+                .pathParam("videoGameId", 5)
+                .when()
+                .get(VideoGamesEndpoints.SINGLE_VIDEO_GAMES)
+                .then().;
+    }
+
 }
