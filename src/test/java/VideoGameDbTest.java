@@ -49,4 +49,22 @@ public class VideoGameDbTest extends VideoGameConfig {
                 .then();
     }
 
+    @Test
+    public void updateGame() {
+        String gameBodyJson = "{\n" +
+                "  \"id\": 556,\n" +
+                "  \"name\": \"MyNewame\",\n" +
+                "  \"releaseDate\": \"2020-08-05T18:27:11.400Z\",\n" +
+                "  \"reviewScore\": 77,\n" +
+                "  \"category\": \"Driving\",\n" +
+                "  \"rating\": \"Universal\"\n" +
+                "}";
+
+        given()
+                .body(gameBodyJson)
+                .when()
+                .put("videogames/556")
+                .then();
+    }
+
 }
