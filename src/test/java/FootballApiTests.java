@@ -1,5 +1,6 @@
 import config.FootballApiConfig;
 import io.restassured.http.ContentType;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.junit.Test;
 
@@ -52,5 +53,22 @@ public class FootballApiTests extends FootballApiConfig {
                 .response();
 
         String jsonResponseAsString = response.asString();
+    }
+
+    @Test
+    public void extractHeaders(){
+        Response response = given()
+                .when()
+                .get("teams/57")
+                .then()
+                .contentType(ContentType.JSON)
+                .extract()
+                .response();
+
+        Headers headers = response.getHeaders();
+
+        String contentType = response.getHeader("Content-Type");
+
+        System.out.println(contentType);
     }
 }
