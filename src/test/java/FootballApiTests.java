@@ -71,4 +71,11 @@ public class FootballApiTests extends FootballApiConfig {
 
         System.out.println(contentType);
     }
+
+    @Test
+    public void extractFirstTeamName(){
+        String firstTeamName = get("competitions/2021/teams").jsonPath().getString("teams.name[0]");
+
+        System.out.println(firstTeamName);
+    }
 }
