@@ -68,7 +68,7 @@ public class VideoGameDbTest extends VideoGameConfig {
     }
 
     @Test
-    public void deleteGame(){
+    public void deleteGame() {
         given()
                 .when()
                 .delete("videogames/2")
@@ -76,7 +76,7 @@ public class VideoGameDbTest extends VideoGameConfig {
     }
 
     @Test
-    public void getSingleGame(){
+    public void getSingleGame() {
         given()
                 .pathParam("videoGameId", 5)
                 .when()
@@ -84,4 +84,14 @@ public class VideoGameDbTest extends VideoGameConfig {
                 .then();
     }
 
+    @Test
+    public void testVideoGameSerializationByJson() {
+        VideoGame videoGame = new VideoGame("22", "1984-06-25", "Tetris", "Universal", "2", "Puzzle");
+
+        given()
+                .body(videoGame)
+                .when()
+                .post(VideoGamesEndpoints.ALL_VIDEO_GAMES)
+                .then();
+    }
 }
