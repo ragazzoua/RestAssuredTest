@@ -3,9 +3,10 @@ import config.VideoGamesEndpoints;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.lessThan;
 
 public class VideoGameDbTest extends VideoGameConfig {
 
@@ -17,7 +18,7 @@ public class VideoGameDbTest extends VideoGameConfig {
     @Test
     public void createNewGameByJson() {
         String gameBodyJson = "{\n" +
-                "  \"id\": 112,\n" +
+                "  \"id\": 113,\n" +
                 "  \"name\": \"MyNewGame\",\n" +
                 "  \"releaseDate\": \"2020-08-05T18:27:11.397Z\",\n" +
                 "  \"reviewScore\": 88,\n" +
@@ -130,5 +131,20 @@ public class VideoGameDbTest extends VideoGameConfig {
         VideoGame videoGame = response.getBody().as(VideoGame.class);
 
         System.out.println(videoGame.toString());
+    }
+
+    @Test
+    public void captureResponseTime(){
+        long responseTime = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).time();
+        System.out.println(responseTime);
+    }
+
+    @Test
+    public void assertOnResponseTime(){
+        when()
+                .get(VideoGamesEndpoints.ALL_VIDEO_GAMES)
+                .then()
+                .time(lessThan(2000L));
+
     }
 }
