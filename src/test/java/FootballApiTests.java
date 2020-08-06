@@ -4,8 +4,9 @@ import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
+import java.util.List;
+
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class FootballApiTests extends FootballApiConfig {
@@ -28,7 +29,7 @@ public class FootballApiTests extends FootballApiConfig {
     }
 
     @Test
-    public void getFirstTeamName(){
+    public void getFirstTeamName() {
         given()
                 .when()
                 .get("competitions/2021/teams")
@@ -37,13 +38,13 @@ public class FootballApiTests extends FootballApiConfig {
     }
 
     @Test
-    public void getAllTeamData(){
+    public void getAllTeamData() {
         String responseBody = get("teams/57").asString();
         System.out.println(responseBody);
     }
 
     @Test
-    public void getAllTeamDataDoCheckFirst(){
+    public void getAllTeamDataDoCheckFirst() {
         Response response = given()
                 .when()
                 .get("teams/57")
@@ -56,7 +57,7 @@ public class FootballApiTests extends FootballApiConfig {
     }
 
     @Test
-    public void extractHeaders(){
+    public void extractHeaders() {
         Response response = given()
                 .when()
                 .get("teams/57")
@@ -73,9 +74,27 @@ public class FootballApiTests extends FootballApiConfig {
     }
 
     @Test
-    public void extractFirstTeamName(){
+    public void extractFirstTeamName() {
         String firstTeamName = get("competitions/2021/teams").jsonPath().getString("teams.name[0]");
 
         System.out.println(firstTeamName);
     }
+
+    @Test
+    public void extractAllTeamsNames() {
+        Response response = given()
+                .when()
+                .get("competitions/2021/teams")
+                .then()
+                .extract()
+                .response();
+
+        List<String> teamNames = response.path("teams.name");
+
+        for (String teamName : teamNames) {
+            System.out.println(teamName);
+        }
+    }
+
+
 }
