@@ -95,6 +95,4 @@ public class FootballApiTests extends FootballApiConfig {
             System.out.println(teamName);
         }
     }
-
-
 }
