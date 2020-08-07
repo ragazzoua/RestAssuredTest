@@ -21,8 +21,8 @@ public class FootballApiConfig {
                 .setBasePath("/v2/")
                 .addHeader("X-Auth-Token", "505f35e412dc44f291919a1b3ae24301")
                 .addHeader("X-Response-Control", "minified")
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+                //.addFilter(new RequestLoggingFilter())
+                //.addFilter(new ResponseLoggingFilter())
                 .build();
 
         footballResponseSpecification = new ResponseSpecBuilder()
