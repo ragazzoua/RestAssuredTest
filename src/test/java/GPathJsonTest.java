@@ -33,10 +33,10 @@ public class GPathJsonTest extends FootballApiConfig {
     }
 
     @Test
-    public void extractListValuesFindAll(){
+    public void extractListValuesFindAll() {
         Response response = get("teams/57");
         List<String> certainPlayers = response.path("squad.findAll {it.shirtNumber >= 23}.name");
 
-        System.out.println("Player " + certainPlayers.toString());
+        System.out.println("Players " + certainPlayers.toString());
     }
 }
