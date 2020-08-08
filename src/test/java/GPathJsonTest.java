@@ -87,8 +87,7 @@ public class GPathJsonTest extends FootballApiConfig {
 
         for (Map<String, ?> listItem : allPlayersCertainNationality) {
             for (Map.Entry<String, ?> stringEntry : listItem.entrySet()) {
-                Map.Entry pair = (Map.Entry) stringEntry;
-                System.out.println(pair.getKey() + " = " + pair.getValue());
+                System.out.println(((Map.Entry) stringEntry).getKey() + " = " + ((Map.Entry) stringEntry).getValue());
             }
         }
     }
