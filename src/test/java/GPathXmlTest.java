@@ -13,4 +13,12 @@ public class GPathXmlTest extends TestConfig {
         String name  = response.path("videoGames.videoGame.name[0]");
         System.out.println(name);
     }
+
+    @Test
+    public void getAttributeName(){
+        Response response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES);
+        String category  = response.path("videoGames.videoGame[1].@category");
+
+        System.out.println(category);
+    }
 }
