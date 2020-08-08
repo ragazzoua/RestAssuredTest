@@ -2,8 +2,7 @@ import config.FootballApiConfig;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.get;
 
@@ -20,7 +19,6 @@ public class GPathJsonTest extends FootballApiConfig {
         for (Map.Entry<String, ?> data : allTeamDataForSingleTeam.entrySet()) {
             System.out.println(data.getKey() + " - " + data.getValue());
         }
-
         System.out.println(allTeamDataForSingleTeam);
     }
 
@@ -28,7 +26,6 @@ public class GPathJsonTest extends FootballApiConfig {
     public void extractSingleValueWithFind() {
         Response response = get("teams/57");
         String certainPlayer = response.path("squad.find {it.shirtNumber == 23}.name");
-
         System.out.println("Player " + certainPlayer);
     }
 
@@ -36,7 +33,6 @@ public class GPathJsonTest extends FootballApiConfig {
     public void extractListValuesFindAll() {
         Response response = get("teams/57");
         List<String> certainPlayers = response.path("squad.findAll {it.shirtNumber >= 23}.name");
-
         System.out.println("Players " + certainPlayers.toString());
     }
 
@@ -52,5 +48,48 @@ public class GPathJsonTest extends FootballApiConfig {
         Response response = get("teams/57");
         int sumOfIds = response.path("squad.collect { it.id }.sum()");
         System.out.println(sumOfIds);
+    }
+
+    @Test
+    public void extractObjectWithFindAndFindAll() {
+        Response response = get("teams/57");
+        Map<String, ?> playerOfCertainPosition = response
+                .path("squad.findAll { it.position == 'Defender'}.find { it.nationality = 'Greece' }");
+
+        for (Map.Entry<String, ?> data : playerOfCertainPosition.entrySet()) {
+            System.out.println(data.getKey() + " - " + data.getValue());
+        }
+    }
+
+    @Test
+    public void extractObjectWithFindAndFindAllParameters() {
+        String position = "Defender";
+        String nationality = "Greece";
+
+        Response response = get("teams/57");
+        Map<String, ?> playerOfCertainPosition = response
+                .path("squad.findAll { it.position == '%s'}.find { it.nationality = '%s' }", position, nationality);
+
+        for (Map.Entry<String, ?> data : playerOfCertainPosition.entrySet()) {
+            System.out.println(data.getKey() + " - " + data.getValue());
+        }
+    }
+
+    @Test
+    public void extractMultiplePlayers() {
+        String position = "Midfielder";
+        String nationality = "England";
+
+        Response response = get("teams/57");
+
+        List<Map<String, ?>> allPlayersCertainNationality = response
+                .path("squad.findAll { it.position == '%s'}.findAll { it.nationality = '%s' }", position, nationality);
+
+        for (Map<String, ?> listItem : allPlayersCertainNationality) {
+            for (Map.Entry<String, ?> stringEntry : listItem.entrySet()) {
+                Map.Entry pair = (Map.Entry) stringEntry;
+                System.out.println(pair.getKey() + " = " + pair.getValue());
+            }
+        }
     }
 }
