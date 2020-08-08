@@ -10,22 +10,25 @@ import org.junit.BeforeClass;
 
 public class TestConfig {
 
+    public static RequestSpecification requestSpecification;
+    public static ResponseSpecification responseSpecification;
+
     @BeforeClass
     public static void setup() {
         //RestAssured.proxy("localhost", 8888); // it is  setting for fiddler you should install fiddler on your pc
         RestAssured.baseURI = "http://video-game-db.eu-west-2.elasticbeanstalk.com";
         RestAssured.basePath = "/app/";
 
-        RequestSpecification requestSpecification = new RequestSpecBuilder()
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+        requestSpecification = new RequestSpecBuilder()
+                .addHeader("Content-Type", "application/xml")
+                .addHeader("Accept", "application/xml")
+                //.addFilter(new RequestLoggingFilter())
+                //.addFilter(new ResponseLoggingFilter())
                 .build();
 
         RestAssured.requestSpecification = requestSpecification;
 
-        ResponseSpecification responseSpecification = new ResponseSpecBuilder()
+        responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .build();
 
