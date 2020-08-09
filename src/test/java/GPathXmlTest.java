@@ -35,4 +35,14 @@ public class GPathXmlTest extends TestConfig {
 
         System.out.println(nodes.get(5).get("name").toString());
     }
+
+    @Test
+    public void getListOfXmlNodesByFindAllOnAttributes(){
+        String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
+
+        List<Node> nodes = XmlPath.from(response)
+                .get("videoGames.videoGame.findAll { videoGame -> def category = videoGame.@category; category == 'Driving'}");
+
+        System.out.println(nodes.get(0).get("name").toString());
+    }
 }
