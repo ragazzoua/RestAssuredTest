@@ -45,4 +45,15 @@ public class GPathXmlTest extends TestConfig {
 
         System.out.println(nodes.get(0).get("name").toString());
     }
+
+    @Test
+    public void getSingleNode(){
+        String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
+
+        Node videoGame = XmlPath.from(response)
+                .get("videoGames.videoGame.find { videoGame -> def name  = videoGame.name; name == 'Tetris'}");
+
+        String name = videoGame.get("name").toString();
+        System.out.println(name);
+    }
 }
