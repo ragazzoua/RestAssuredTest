@@ -27,7 +27,7 @@ public class GPathXmlTest extends TestConfig {
     }
 
     @Test
-    public void getListOfXmlNodes(){
+    public void getListOfXmlNodes() {
         String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
 
         List<Node> nodes = XmlPath.from(response)
@@ -37,7 +37,7 @@ public class GPathXmlTest extends TestConfig {
     }
 
     @Test
-    public void getListOfXmlNodesByFindAllOnAttributes(){
+    public void getListOfXmlNodesByFindAllOnAttributes() {
         String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
 
         List<Node> nodes = XmlPath.from(response)
@@ -47,7 +47,7 @@ public class GPathXmlTest extends TestConfig {
     }
 
     @Test
-    public void getSingleNode(){
+    public void getSingleNode() {
         String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
 
         Node videoGame = XmlPath.from(response)
@@ -55,5 +55,16 @@ public class GPathXmlTest extends TestConfig {
 
         String name = videoGame.get("name").toString();
         System.out.println(name);
+    }
+
+    @Test
+    public void getSingleElementDepthFirst() {
+
+        String response = get(VideoGamesEndpoints.ALL_VIDEO_GAMES).asString();
+
+        int reviewScore = XmlPath.from(response).getInt("**.find {it.name == 'Tetris'}.reviewScore");
+
+        System.out.println(reviewScore);
+
     }
 }
