@@ -1,3 +1,4 @@
+import config.TestConfig;
 import config.VideoGamesEndpoints;
 import io.restassured.path.xml.XmlPath;
 import io.restassured.path.xml.element.Node;
